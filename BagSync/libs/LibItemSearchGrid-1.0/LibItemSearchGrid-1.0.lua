@@ -30,6 +30,9 @@ end
 
 
 --[[ Locals ]]--
+local _G = _G
+local GetEquipmentSetInfo = _G.C_EquipmentSet.GetEquipmentSetInfo
+local GetNumEquipmentSets = _G.C_EquipmentSet.GetNumEquipmentSets
 
 local tonumber, select, split = tonumber, select, strsplit
 local function useful(a) -- check if the search has a decent size
@@ -457,7 +460,7 @@ end
 if IsAddOnLoaded('ItemRack') then
 	function ES_FindSets(setList, search, exactMatch)
 		for setName, _ in pairs(ItemRackUser.Sets) do
-			if ES_TrySetName(setName, search, exactMatch) then
+			if setName and ES_TrySetName(setName, search, exactMatch) then
 				if (search ~= '*') or (search == '*' and setName:sub(1,1) ~= '~') then --note: this additional tilde check skips internal ItemRack sets when doing a global set search (internal sets are prefixed with tilde, such as ~Unequip, and they contain temporary data that should not be part of a global search)
 					table.insert(setList, setName)
 				end
@@ -520,7 +523,7 @@ else
 	function ES_FindSets(setList, search, exactMatch)
 		for i = 1, GetNumEquipmentSets() do
 			local setName = GetEquipmentSetInfo(i)
-			if ES_TrySetName(setName, search, exactMatch) then
+			if setName and ES_TrySetName(setName, search, exactMatch) then
 				table.insert(setList, setName)
 			end
 		end
