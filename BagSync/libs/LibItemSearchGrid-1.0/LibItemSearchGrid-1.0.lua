@@ -30,9 +30,6 @@ end
 
 
 --[[ Locals ]]--
-local _G = _G
-local GetEquipmentSetInfo = _G.C_EquipmentSet.GetEquipmentSetInfo
-local GetNumEquipmentSets = _G.C_EquipmentSet.GetNumEquipmentSets
 
 local tonumber, select, split = tonumber, select, strsplit
 local function useful(a) -- check if the search has a decent size
@@ -521,8 +518,8 @@ elseif IsAddOnLoaded('Wardrobe') then
 --Last Resort: Blizzard Equipment Manager
 else
 	function ES_FindSets(setList, search, exactMatch)
-		for i = 1, GetNumEquipmentSets() do
-			local setName = GetEquipmentSetInfo(i)
+		for i = 1, C_EquipmentSet.GetNumEquipmentSets() do
+			local setName = C_EquipmentSet.GetEquipmentSetInfo(i)
 			if setName and ES_TrySetName(setName, search, exactMatch) then
 				table.insert(setList, setName)
 			end
